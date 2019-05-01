@@ -16,22 +16,22 @@ namespace OtraPrueba2
             try
             {
                 ss.SetOutputToDefaultAudioDevice();
-                CultureInfo ci = new CultureInfo("es-es");
+                CultureInfo ci = new CultureInfo("es-ES"); // Para que el idioma de la entrada de voz sea espaniol
                 sre = new SpeechRecognitionEngine(ci);
                 sre.SetInputToDefaultAudioDevice();
-                sre.SpeechRecognized += sre_SpeechRecognized;
-                Choices ch_StartStopCommands = new Choices();
-                ch_StartStopCommands.Add("speech on");
-                ch_StartStopCommands.Add("speech off");
-                ch_StartStopCommands.Add("click");
-                ch_StartStopCommands.Add("doble click");
-                ch_StartStopCommands.Add("click derecho");
-                GrammarBuilder gb_StartStop = new GrammarBuilder();
-                gb_StartStop.Append(ch_StartStopCommands);
-                Grammar g_StartStop = new Grammar(gb_StartStop);
-                sre.LoadGrammarAsync(g_StartStop);
+                Choices choices = new Choices(); // Opciones para decir
+                choices.Add("speech on");
+                choices.Add("speech off");
+                choices.Add("click");
+                choices.Add("doble click");
+                choices.Add("click derecho");
+                sre.SpeechRecognized += sre_SpeechRecognized; //Cuando reconoce alguna de las opciones, va a la funcion
+                GrammarBuilder grammarBuilder = new GrammarBuilder();
+                grammarBuilder.Append(choices);
+                Grammar grammar = new Grammar(grammarBuilder);
+                //sre.LoadGrammarAsync(grammar); --> En internet me aparecia siempre de la forma de abajo (Saidman)
+                sre.LoadGrammar(grammar);
                 sre.RecognizeAsync(RecognizeMode.Multiple);
-                while (done == false) {; }
                 Console.WriteLine("\nHit <enter> to close shell\n");
                 Console.ReadLine();
             }
@@ -41,39 +41,40 @@ namespace OtraPrueba2
                 Console.ReadLine();
             }
         } // Main
-        static void sre_SpeechRecognized(object sender,
-            SpeechRecognizedEventArgs e)
+        static void sre_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             string txt = e.Result.Text;
-            float confidence = e.Result.Confidence;
             Console.WriteLine("\nRecognized: " + txt);
+
+            //Si el sistema no esta seguro de lo que entendio, no se hace nada (lo de confidence)
+            //float confidence = e.Result.Confidence;
             //if (confidence < 0.60) return;
-            if (txt.IndexOf("speech on") >= 0)
+
+            // Propongo borrar esto de Speech =) (Saidman)
+            if (txt.Contains("speech on"))
             {
-                Console.WriteLine("Speech is now ON");
-                speechOn = true;
+                mostrar_Decir_Mensaje("Speech is now ON");
             }
-            if (txt.IndexOf("speech off") >= 0)
+            else if (txt.Contains("speech off"))
             {
-                Console.WriteLine("Speech is now OFF");
-                speechOn = false;
+                mostrar_Decir_Mensaje("Speech is now OFF");
             }
-            if (txt.IndexOf("click derecho") >= 0)
+            else
             {
-                Console.WriteLine("click derecho realizado");
-                speechOn = true;
-            }
-            else if (txt.IndexOf("doble click") >= 0)
-            {
-                Console.WriteLine("doble click realizado");
-                speechOn = true;
-            }
-            else if (txt.IndexOf("click") >= 0)
-            {
-                Console.WriteLine("click realizado");
-                speechOn = true;
+                mostrar_Decir_Mensaje(txt);
             }
             if (speechOn == false) return;
         } // sre_SpeechRecognized
+
+        static void mostrar_Decir_Mensaje(String texto)
+        {
+            Char primeraLetra = Char.ToUpper(texto[0]); // Convierte la primera letra del texto a mayuscula
+            String textoMostrarDecir = primeraLetra + texto.Substring(1, texto.Length - 1) + " realizado. "; // Concatena la primera letra en mayuscula con el resto del texto
+            Console.WriteLine(textoMostrarDecir);
+            SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+            synthesizer.Speak(textoMostrarDecir);
+            synthesizer.Dispose();
+            speechOn = true;
+        }
     } // Program
 } // ns
