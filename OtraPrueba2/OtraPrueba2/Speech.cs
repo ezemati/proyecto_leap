@@ -2,6 +2,7 @@
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace OtraPrueba2
 {
@@ -51,18 +52,19 @@ namespace OtraPrueba2
             //if (confidence < 0.60) return;
 
             // Propongo borrar esto de Speech =) (Saidman)
-            if (txt.Contains("speech on"))
+            if (txt.Equals("speech on"))
             {
                 mostrar_Decir_Mensaje("Speech is now ON");
             }
-            else if (txt.Contains("speech off"))
+            else if (txt.Equals("speech off"))
             {
                 mostrar_Decir_Mensaje("Speech is now OFF");
             }
-            else if (txt.Contains("click"))
+            else if (txt.Equals("click"))
             {
                 MouseHook.ClickOnPoint(); //Prueba de click
-            } else
+            }
+            else
             {
                 mostrar_Decir_Mensaje(txt);
             }
@@ -71,10 +73,35 @@ namespace OtraPrueba2
 
         static void mostrar_Decir_Mensaje(String texto)
         {
-            Char primeraLetra = Char.ToUpper(texto[0]); // Convierte la primera letra del texto a mayuscula
-            String textoMostrarDecir = primeraLetra + texto.Substring(1, texto.Length - 1) + " realizado. "; // Concatena la primera letra en mayuscula con el resto del texto
-            Console.WriteLine(textoMostrarDecir);
+            String textoMostrarDecir = "";
+            bool espaniolInstalado = false;
+            int iContVoces = 0;
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+            IList < InstalledVoice > vocesInstaladas = synthesizer.GetInstalledVoices();
+            while ((espaniolInstalado == false) && (iContVoces < vocesInstaladas.Count))
+            {
+                if (vocesInstaladas[iContVoces].VoiceInfo.Description.Contains("Microsoft Helena Desktop"))
+                {
+                    espaniolInstalado = true;
+                }
+                else
+                {
+                    iContVoces++;
+                }
+            }
+            
+            if (espaniolInstalado)
+            {
+                synthesizer.SelectVoice("Microsoft Helena Desktop"); // Si la PC tiene la voz en español, se la asigno al "hablador"
+                Char primeraLetra = Char.ToUpper(texto[0]); // Convierte la primera letra del texto a mayuscula
+                textoMostrarDecir = primeraLetra + texto.Substring(1, texto.Length - 1) + " realizado. "; // Concatena la primera letra en mayuscula con el resto del texto
+            }
+            else
+            {
+                textoMostrarDecir = "Why don't you install the Spanish package, you son of a bitch? By the way, Iron Man dies."; // Amén
+            }
+
+            //Console.WriteLine(textoMostrarDecir);
             synthesizer.Speak(textoMostrarDecir);
             synthesizer.Dispose();
             speechOn = true;

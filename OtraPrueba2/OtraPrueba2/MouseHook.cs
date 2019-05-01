@@ -63,7 +63,7 @@ namespace OtraPrueba2
             {
                 MSLLHOOK hookStruct = (MSLLHOOK)Marshal.PtrToStructure(lParam, typeof(MSLLHOOK));
                 Console.WriteLine(hookStruct.pt.x + ", " + hookStruct.pt.y);
-                SetCursorPos(hookStruct.pt.x + 5, hookStruct.pt.y);//Mueve el mouse 5pxs para la derecha
+                //SetCursorPos(hookStruct.pt.x + 5, hookStruct.pt.y);//Mueve el mouse 5pxs para la derecha
 
                 //LeftMouseClicks++;
                 //Console.WriteLine(LeftMouseClicks);
