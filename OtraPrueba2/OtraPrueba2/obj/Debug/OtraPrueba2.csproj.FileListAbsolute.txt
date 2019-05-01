@@ -16,3 +16,5 @@ C:\Users\David\Desktop\servicio_keylogger\OtraPrueba2\OtraPrueba2\obj\Debug\Otra
 C:\Users\David\Desktop\servicio_keylogger\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.csproj.CoreCompileInputs.cache
 C:\Users\David\Desktop\servicio_keylogger\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.exe
 C:\Users\David\Desktop\servicio_keylogger\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.pdb
+C:\Users\David\Desktop\servicio_keylogger\OtraPrueba2\OtraPrueba2\bin\Debug\LeapCSharp.NET4.5.dll
+C:\Users\David\Desktop\servicio_keylogger\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.csproj.CopyComplete

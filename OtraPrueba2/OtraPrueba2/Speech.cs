@@ -59,7 +59,10 @@ namespace OtraPrueba2
             {
                 mostrar_Decir_Mensaje("Speech is now OFF");
             }
-            else
+            else if (txt.Contains("click"))
+            {
+                MouseHook.ClickOnPoint(); //Prueba de click
+            } else
             {
                 mostrar_Decir_Mensaje(txt);
             }

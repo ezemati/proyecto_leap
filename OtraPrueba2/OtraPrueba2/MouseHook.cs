@@ -32,11 +32,13 @@ namespace OtraPrueba2
 
         private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        public static long LeftMouseClicks { get; private set; }
-        public static long RightMouseClicks { get; private set; }
+        private static POINT mousePOS;//Posicion actual del mouse
 
-        public static void Initialize()
+        private static IntPtr handle;
+
+        public static void Initialize(IntPtr h)
         {
+            handle = h;
             _hookID = SetHook(_proc);
         }
 
@@ -57,15 +59,17 @@ namespace OtraPrueba2
         //https://blogs.msdn.microsoft.com/toub/2006/05/03/low-level-mouse-hook-in-c/
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && MouseMessage.WM_LBUTTONDOWN == (MouseMessage)wParam) { 
+            if (nCode >= 0 && MouseMessage.WM_LBUTTONDOWN == (MouseMessage)wParam)
+            {
                 MSLLHOOK hookStruct = (MSLLHOOK)Marshal.PtrToStructure(lParam, typeof(MSLLHOOK));
                 Console.WriteLine(hookStruct.pt.x + ", " + hookStruct.pt.y);
-                SetCursorPos(hookStruct.pt.x+5, hookStruct.pt.y);//Mueve el mouse 5pxs para la derecha
-                    
+                SetCursorPos(hookStruct.pt.x + 5, hookStruct.pt.y);//Mueve el mouse 5pxs para la derecha
+
                 //LeftMouseClicks++;
                 //Console.WriteLine(LeftMouseClicks);
             }
-            else if (nCode >= 0 && MouseMessage.WM_RBUTTONDOWN == (MouseMessage)wParam) { 
+            else if (nCode >= 0 && MouseMessage.WM_RBUTTONDOWN == (MouseMessage)wParam)
+            {
                 //RightMouseClicks++;
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
@@ -99,8 +103,14 @@ namespace OtraPrueba2
 
         }
 
+        internal struct INPUT
+        {
+            public UInt32 Type;
+            public MOUSEKEYBDHARDWAREINPUT Data;
+        }
+
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
-        private static extern bool SetCursorPos(int X, int Y);
+        public static extern bool SetCursorPos(int X, int Y);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook,
@@ -116,5 +126,47 @@ namespace OtraPrueba2
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll")]
+        internal static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
+
+        [DllImport("user32.dll")]
+        static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct MOUSEKEYBDHARDWAREINPUT
+        {
+            [FieldOffset(0)]
+            public MOUSEINPUT Mouse;
+        }
+
+        internal struct MOUSEINPUT
+        {
+            public Int32 X;
+            public Int32 Y;
+            public UInt32 MouseData;
+            public UInt32 Flags;
+            public UInt32 Time;
+            public IntPtr ExtraInfo;
+        }
+
+
+        public static void ClickOnPoint()
+        {
+
+            /// get screen coordinates
+            ClientToScreen(handle, ref mousePOS);
+
+            var inputMouseDown = new INPUT();
+            inputMouseDown.Type = 0; /// input type mouse
+            inputMouseDown.Data.Mouse.Flags = 0x0002; /// left button down
+
+            var inputMouseUp = new INPUT();
+            inputMouseUp.Type = 0; /// input type mouse
+            inputMouseUp.Data.Mouse.Flags = 0x0004; /// left button up
+
+            var inputs = new INPUT[] { inputMouseDown, inputMouseUp };
+            SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+        }
     }
 }

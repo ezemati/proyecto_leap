@@ -7,16 +7,19 @@ namespace OtraPrueba2 {
     {
         public static void Main()
         {
-            //var handle = GetConsoleWindow(); // Obtener la ventana
+            var handle = GetConsoleWindow(); // Obtener la ventana
+
+            //Activa el controlador del leap motion
+            //LeapController leapReader = new LeapController();
 
             //Activa keylogger
             KeyboardHook.Initialize();
             
             //Activa control de mouse
-            MouseHook.Initialize();
+            MouseHook.Initialize(handle);
 
             //Activa registro de voz
-            //Speech.Initialize();
+            Speech.Initialize();
 
             Application.Run();
 
