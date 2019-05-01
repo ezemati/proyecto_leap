@@ -12,14 +12,22 @@ namespace servicioPaginaNoMicrosoft
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            if (Environment.UserInteractive)
             {
-                new Service1()
-            };
-            ServiceBase.Run(ServicesToRun);
-        }        
+                Service1 service1 = new Service1(args);
+                service1.TestStartupAndStop(args);
+            }
+            else
+            {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
+                new Service1(args)
+                };
+                ServiceBase.Run(ServicesToRun);
+            }
+        }
     }
 }

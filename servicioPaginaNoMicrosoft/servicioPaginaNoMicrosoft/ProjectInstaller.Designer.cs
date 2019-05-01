@@ -40,8 +40,8 @@
             // serviceInstaller1
             // 
             this.serviceInstaller1.Description = "Esto esta en la definicion de InitializeComponent()";
-            this.serviceInstaller1.DisplayName = "MiPrimerServicio.Demo";
-            this.serviceInstaller1.ServiceName = "Service1";
+            this.serviceInstaller1.DisplayName = "Keylogger";
+            this.serviceInstaller1.ServiceName = "Service_Keylogger";
             // 
             // ProjectInstaller
             // 
