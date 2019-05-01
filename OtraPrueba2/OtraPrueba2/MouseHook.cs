@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Threading;
+using System.Windows.Forms;
 namespace OtraPrueba2
 {
     using System;
@@ -133,6 +134,9 @@ namespace OtraPrueba2
         [DllImport("user32.dll")]
         static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+
         [StructLayout(LayoutKind.Explicit)]
         internal struct MOUSEKEYBDHARDWAREINPUT
         {
@@ -151,22 +155,20 @@ namespace OtraPrueba2
         }
 
 
-        public static void ClickOnPoint()
+        public static void ClickOnPoint(int iCantClicks)
         {
 
-            /// get screen coordinates
-            ClientToScreen(handle, ref mousePOS);
-
-            var inputMouseDown = new INPUT();
-            inputMouseDown.Type = 0; /// input type mouse
-            inputMouseDown.Data.Mouse.Flags = 0x0002; /// left button down
-
-            var inputMouseUp = new INPUT();
-            inputMouseUp.Type = 0; /// input type mouse
-            inputMouseUp.Data.Mouse.Flags = 0x0004; /// left button up
-
-            var inputs = new INPUT[] { inputMouseDown, inputMouseUp };
-            SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+            // Creo que esto se puede borrar, y tambien el mousePOS, despues limpia lo que ya no usemos
+            // get screen coordinates
+            //ClientToScreen(handle, ref mousePOS);
+            uint X = (uint)Cursor.Position.X;
+            uint Y = (uint)Cursor.Position.Y;
+            for (int i = 1; i <= iCantClicks; i++)
+            {
+                mouse_event(0x02, X, Y, 0, 0);
+                mouse_event(0x04, X, Y, 0, 0);
+                Thread.Sleep(50); // Necesario para que haya separacion entre cada click
+            }
         }
     }
 }

@@ -62,7 +62,15 @@ namespace OtraPrueba2
             }
             else if (txt.Equals("click"))
             {
-                MouseHook.ClickOnPoint(); //Prueba de click
+                MouseHook.ClickOnPoint(1); //Prueba de click
+            }
+            else if (txt.Equals("doble click"))
+            {
+                MouseHook.ClickOnPoint(2);
+            }
+            else if (txt.Equals("click derecho"))
+            {
+                // Desarrollar el Click derecho (parecida a la funcion que ya existe, pasarle distinto codigo 0x...)
             }
             else
             {
@@ -77,10 +85,10 @@ namespace OtraPrueba2
             bool espaniolInstalado = false;
             int iContVoces = 0;
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-            IList < InstalledVoice > vocesInstaladas = synthesizer.GetInstalledVoices();
+            IList < InstalledVoice > vocesInstaladas = synthesizer.GetInstalledVoices(); // Lista de las voces instaladas en la PC
             while ((espaniolInstalado == false) && (iContVoces < vocesInstaladas.Count))
             {
-                if (vocesInstaladas[iContVoces].VoiceInfo.Description.Contains("Microsoft Helena Desktop"))
+                if (vocesInstaladas[iContVoces].VoiceInfo.Description.Contains("Microsoft Helena Desktop")) // Nombre de la voz en español
                 {
                     espaniolInstalado = true;
                 }
@@ -98,7 +106,7 @@ namespace OtraPrueba2
             }
             else
             {
-                textoMostrarDecir = "Why don't you install the Spanish package, you son of a bitch? By the way, Iron Man dies."; // Amén
+                textoMostrarDecir = "Why don't you install the Spanish package, you fucking son of a bitch? By the way, Iron Man dies."; // Amén
             }
 
             //Console.WriteLine(textoMostrarDecir);
