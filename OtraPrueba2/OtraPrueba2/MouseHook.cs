@@ -62,11 +62,11 @@ namespace OtraPrueba2
                 Console.WriteLine(hookStruct.pt.x + ", " + hookStruct.pt.y);
                 SetCursorPos(hookStruct.pt.x+5, hookStruct.pt.y);//Mueve el mouse 5pxs para la derecha
                     
-                LeftMouseClicks++;
-                Console.WriteLine(LeftMouseClicks);
+                //LeftMouseClicks++;
+                //Console.WriteLine(LeftMouseClicks);
             }
             else if (nCode >= 0 && MouseMessage.WM_RBUTTONDOWN == (MouseMessage)wParam) { 
-                RightMouseClicks++;
+                //RightMouseClicks++;
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
