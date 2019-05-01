@@ -16,8 +16,6 @@ namespace OtraPrueba2
             try
             {
                 ss.SetOutputToDefaultAudioDevice();
-                Console.WriteLine("\n(Speaking: Acá estoy)");
-                ss.Speak("Acá estoy");
                 CultureInfo ci = new CultureInfo("es-es");
                 sre = new SpeechRecognitionEngine(ci);
                 sre.SetInputToDefaultAudioDevice();
