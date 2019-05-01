@@ -47,7 +47,7 @@ namespace OtraPrueba2
             string txt = e.Result.Text;
             float confidence = e.Result.Confidence;
             Console.WriteLine("\nRecognized: " + txt);
-            if (confidence < 0.60) return;
+            //if (confidence < 0.60) return;
             if (txt.IndexOf("speech on") >= 0)
             {
                 Console.WriteLine("Speech is now ON");
