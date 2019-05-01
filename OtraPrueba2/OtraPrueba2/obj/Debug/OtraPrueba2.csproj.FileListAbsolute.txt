@@ -1,0 +1,9 @@
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\bin\Debug\OtraPrueba2.exe.config
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\bin\Debug\OtraPrueba2.exe
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\bin\Debug\OtraPrueba2.pdb
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.csprojAssemblyReference.cache
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.Properties.Resources.resources
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.csproj.GenerateResource.cache
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.csproj.CoreCompileInputs.cache
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.exe
+C:\Users\David\Desktop\OtraPrueba2\OtraPrueba2\obj\Debug\OtraPrueba2.pdb
