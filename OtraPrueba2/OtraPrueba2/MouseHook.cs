@@ -5,15 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
 namespace OtraPrueba2
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-
     public enum MouseMessage
     {
         WM_LBUTTONDOWN = 0x0201,
@@ -26,14 +22,20 @@ namespace OtraPrueba2
 
     public static class MouseHook
     {
+
+        #region codigosMouse
+        private const int mouse_LeftDown = 0x02;
+        private const int mouse_LeftUp = 0x04;
+        private const int mouse_RightDown = 0x08;
+        private const int mouse_RightUp = 0x10;
+        #endregion
+
         private static IntPtr _hookID = IntPtr.Zero;
         private static LowLevelMouseProc _proc = HookCallback;
 
         private const int WH_MOUSE_LL = 14;
 
         private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        private static POINT mousePOS;//Posicion actual del mouse
 
         private static IntPtr handle;
 
@@ -76,6 +78,7 @@ namespace OtraPrueba2
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
+        #region structsImportados
         [StructLayout(LayoutKind.Sequential)]
         private struct POINT
 
@@ -103,71 +106,46 @@ namespace OtraPrueba2
             public IntPtr dwExtraInfo;
 
         }
+        #endregion
 
-        internal struct INPUT
-        {
-            public UInt32 Type;
-            public MOUSEKEYBDHARDWAREINPUT Data;
-        }
-
+        #region dllsImportados
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         public static extern bool SetCursorPos(int X, int Y);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook,
-            LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
+        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
-            IntPtr wParam, IntPtr lParam);
+        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        [DllImport("user32.dll")]
-        internal static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
-
-        [DllImport("user32.dll")]
-        static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+        #endregion
 
-        [StructLayout(LayoutKind.Explicit)]
-        internal struct MOUSEKEYBDHARDWAREINPUT
+        public static void ClickOnPoint(int iCantClicks, bool esIzq)
         {
-            [FieldOffset(0)]
-            public MOUSEINPUT Mouse;
-        }
-
-        internal struct MOUSEINPUT
-        {
-            public Int32 X;
-            public Int32 Y;
-            public UInt32 MouseData;
-            public UInt32 Flags;
-            public UInt32 Time;
-            public IntPtr ExtraInfo;
-        }
-
-
-        public static void ClickOnPoint(int iCantClicks)
-        {
-
-            // Creo que esto se puede borrar, y tambien el mousePOS, despues limpia lo que ya no usemos
-            // get screen coordinates
-            //ClientToScreen(handle, ref mousePOS);
             uint X = (uint)Cursor.Position.X;
             uint Y = (uint)Cursor.Position.Y;
-            for (int i = 1; i <= iCantClicks; i++)
+            if (esIzq)
             {
-                mouse_event(0x02, X, Y, 0, 0);
-                mouse_event(0x04, X, Y, 0, 0);
-                Thread.Sleep(50); // Necesario para que haya separacion entre cada click
+                for (int i = 1; i <= iCantClicks; i++)
+                {
+                    mouse_event(mouse_LeftDown, X, Y, 0, 0);
+                    mouse_event(mouse_LeftUp, X, Y, 0, 0);
+                    Thread.Sleep(50); // Necesario para que haya separacion entre cada click
+                }
+            }
+            else
+            {
+                mouse_event(mouse_RightDown, X, Y, 0, 0);
+                mouse_event(mouse_RightUp, X, Y, 0, 0);
             }
         }
     }

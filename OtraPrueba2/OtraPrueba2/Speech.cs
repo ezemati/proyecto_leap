@@ -8,15 +8,15 @@ namespace OtraPrueba2
 {
     public class Speech
     {
-        static SpeechSynthesizer ss = new SpeechSynthesizer();
+        static SpeechSynthesizer ss = new SpeechSynthesizer(); // Creo que esto no se usa nunca
         static SpeechRecognitionEngine sre;
-        static bool done = false;
+        static bool done = false; // Creo que esto no se usa nunca
         static bool speechOn = true;
         public static void Initialize()
         {
             try
             {
-                ss.SetOutputToDefaultAudioDevice();
+                ss.SetOutputToDefaultAudioDevice(); // Creo que esto no se usa nunca
                 CultureInfo ci = new CultureInfo("es-ES"); // Para que el idioma de la entrada de voz sea espaniol
                 sre = new SpeechRecognitionEngine(ci);
                 sre.SetInputToDefaultAudioDevice();
@@ -47,11 +47,12 @@ namespace OtraPrueba2
             string txt = e.Result.Text;
             Console.WriteLine("\nRecognized: " + txt);
 
-            //Si el sistema no esta seguro de lo que entendio, no se hace nada (lo de confidence)
-            //float confidence = e.Result.Confidence;
-            //if (confidence < 0.60) return;
+            float confidence = e.Result.Confidence; // Esto dejenlo, porque hay veces que si hay un ruido entiende cualquier cosa
+            if (confidence < 0.60)
+            {
+                mostrar_Decir_Mensaje("No se te entendio una goma, habla de nuevo");
+            }            
 
-            // Propongo borrar esto de Speech =) (Saidman)
             if (txt.Equals("speech on"))
             {
                 mostrar_Decir_Mensaje("Speech is now ON");
@@ -62,17 +63,17 @@ namespace OtraPrueba2
             }
             else if (txt.Equals("click"))
             {
-                MouseHook.ClickOnPoint(1); //Prueba de click
+                MouseHook.ClickOnPoint(1, true);
             }
             else if (txt.Equals("doble click"))
             {
-                MouseHook.ClickOnPoint(2);
+                MouseHook.ClickOnPoint(2, true);
             }
             else if (txt.Equals("click derecho"))
             {
-                // Desarrollar el Click derecho (parecida a la funcion que ya existe, pasarle distinto codigo 0x...)
+                MouseHook.ClickOnPoint(1, false);
             }
-            else
+            else // No pasa nunca, podemos borrarla o dejarla porque esta bueno que putee en ingles (me esforce mucho xD)
             {
                 mostrar_Decir_Mensaje(txt);
             }
