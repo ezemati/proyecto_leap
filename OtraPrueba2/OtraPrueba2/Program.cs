@@ -17,12 +17,11 @@ namespace OtraPrueba2 {
 
             if (leapEstaInstalado())
             {
-                Thread.Sleep(500); // Que espere porque sino el controller no llega a conectarse con el dispositivo
+                Thread.Sleep(500); // Espera porque sino el controller no llega a conectarse con el dispositivo
                 if (!leapReader.leapEstaConectado())
                 {
-                    //MessageBox.Show("Test");
-                    //Application.Exit();
                     Console.WriteLine("No conectado");
+                    MessageBox.Show("El Leap no esta conectado! Se cerrara el programa", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -40,14 +39,13 @@ namespace OtraPrueba2 {
                     KeyboardHook.Dispose();
                     MouseHook.Dispose();
                 }
-            }
+            } // Fin de verificar si esta instalado
             else
-            {
-                //MessageBox.Show("Test");
-                //Application.Exit();
+            {                
                 Console.WriteLine("No instalado");
+                MessageBox.Show("No instalaste la aplicacion de Leap!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+        } // Fin del main
     
         public static void Desconectar()
         {
