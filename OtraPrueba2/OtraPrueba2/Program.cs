@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
+using System.IO;
 
 namespace OtraPrueba2 {
     class Test
@@ -9,7 +11,7 @@ namespace OtraPrueba2 {
         {
             var handle = GetConsoleWindow(); // Obtener la ventana
 
-            //Activa el controlador del leap motion
+            /*//Activa el controlador del leap motion
             LeapController leapReader = new LeapController();
 
             //Activa keylogger
@@ -24,12 +26,25 @@ namespace OtraPrueba2 {
             Application.Run();
 
             KeyboardHook.Dispose();
-            MouseHook.Dispose();
+            MouseHook.Dispose();*/
+            bool estaInstalado = leapEstaInstalado();            
         }
     
         public static void Desconectar()
         {
             Application.Exit();
+        }
+
+        public static bool leapEstaInstalado()
+        {
+            bool estaInstalado = false;
+            string direccionRegistro = @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Leap Services";
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(direccionRegistro);
+            if (key != null && key.GetValue("DisplayName").Equals("Leap Motion Software"))
+            {
+                estaInstalado = true;
+            }
+            return estaInstalado;
         }
 
         [DllImport("user32.dll")]
