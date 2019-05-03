@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.IO;
+using System.Threading;
 
 namespace OtraPrueba2 {
     class Test
@@ -11,23 +12,41 @@ namespace OtraPrueba2 {
         {
             var handle = GetConsoleWindow(); // Obtener la ventana
 
-            /*//Activa el controlador del leap motion
+            //Activa el controlador del leap motion
             LeapController leapReader = new LeapController();
 
-            //Activa keylogger
-            KeyboardHook.Initialize();
-            
-            //Activa control de mouse
-            MouseHook.Initialize(handle);
+            if (leapEstaInstalado())
+            {
+                Thread.Sleep(500); // Que espere porque sino el controller no llega a conectarse con el dispositivo
+                if (!leapReader.leapEstaConectado())
+                {
+                    //MessageBox.Show("Test");
+                    //Application.Exit();
+                    Console.WriteLine("No conectado");
+                }
+                else
+                {
+                    //Activa keylogger
+                    KeyboardHook.Initialize();
 
-            //Activa registro de voz
-            Speech.Initialize();
+                    //Activa control de mouse
+                    MouseHook.Initialize(handle);
 
-            Application.Run();
+                    //Activa registro de voz
+                    Speech.Initialize();
 
-            KeyboardHook.Dispose();
-            MouseHook.Dispose();*/
-            bool estaInstalado = leapEstaInstalado();            
+                    Application.Run();
+
+                    KeyboardHook.Dispose();
+                    MouseHook.Dispose();
+                }
+            }
+            else
+            {
+                //MessageBox.Show("Test");
+                //Application.Exit();
+                Console.WriteLine("No instalado");
+            }
         }
     
         public static void Desconectar()
