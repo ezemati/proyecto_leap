@@ -27,11 +27,11 @@ namespace OtraPrueba2
                 choices.Add("seleccionar");
                 choices.Add("desseleccionar");
                 choices.Add("desconectar");
+                choices.Add("silencio");
                 sre.SpeechRecognized += sre_SpeechRecognized; //Cuando reconoce alguna de las opciones, va a la funcion
                 GrammarBuilder grammarBuilder = new GrammarBuilder();
                 grammarBuilder.Append(choices);
                 Grammar grammar = new Grammar(grammarBuilder);
-                //sre.LoadGrammarAsync(grammar); --> En internet me aparecia siempre de la forma de abajo (Saidman)
                 sre.LoadGrammar(grammar);
                 sre.RecognizeAsync(RecognizeMode.Multiple);
                 //Console.WriteLine("\nHit <enter> to close shell\n");
@@ -39,19 +39,23 @@ namespace OtraPrueba2
             }
             catch (Exception ex)
             {
+                Console.WriteLine("aaa");
                 Console.WriteLine(ex.Message);
                 Console.ReadLine();
             }
         } // Main
+        static bool bSilencio = false;
         static void sre_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
+            
             string txt = e.Result.Text;
             Console.WriteLine("\nRecognized: " + txt);
 
             float confidence = e.Result.Confidence; // Esto dejenlo, porque hay veces que si hay un ruido entiende cualquier cosa
             if (confidence < 0.60)
             {
-                mostrar_Decir_Mensaje("No se te entendio una goma, habla de nuevo");
+                if (!bSilencio)
+                    mostrar_Decir_Mensaje("No se te entendio una goma, habla de nuevo");
             }
 
             if (txt.Equals("click"))
@@ -72,8 +76,22 @@ namespace OtraPrueba2
             }
             else if (txt.Equals("desconectar"))
             {
-                mostrar_Decir_Mensaje("Gracias por utilizar aijansi");
-                Test.Desconectar();
+                if (!bSilencio) { 
+                    mostrar_Decir_Mensaje("Gracias por utilizar aijansi");
+                    Test.Desconectar();
+                }
+            }
+            else if (txt.Equals("silencio"))
+            {
+                if (bSilencio)
+                {
+                    mostrar_Decir_Mensaje("Silencio desactivado");
+                    bSilencio = false;
+                } else
+                {
+                    mostrar_Decir_Mensaje("Silencio activado");
+                    bSilencio = true;
+                }
             }
             else // No pasa nunca, podemos borrarla o dejarla porque esta bueno que putee en ingles (me esforce mucho xD)
             {
