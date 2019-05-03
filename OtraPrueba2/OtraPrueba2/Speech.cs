@@ -21,11 +21,10 @@ namespace OtraPrueba2
                 sre = new SpeechRecognitionEngine(ci);
                 sre.SetInputToDefaultAudioDevice();
                 Choices choices = new Choices(); // Opciones para decir
-                choices.Add("speech on");
-                choices.Add("speech off");
                 choices.Add("click");
                 choices.Add("doble click");
                 choices.Add("click derecho");
+                choices.Add("desconectar");
                 sre.SpeechRecognized += sre_SpeechRecognized; //Cuando reconoce alguna de las opciones, va a la funcion
                 GrammarBuilder grammarBuilder = new GrammarBuilder();
                 grammarBuilder.Append(choices);
@@ -33,8 +32,8 @@ namespace OtraPrueba2
                 //sre.LoadGrammarAsync(grammar); --> En internet me aparecia siempre de la forma de abajo (Saidman)
                 sre.LoadGrammar(grammar);
                 sre.RecognizeAsync(RecognizeMode.Multiple);
-                Console.WriteLine("\nHit <enter> to close shell\n");
-                Console.ReadLine();
+                //Console.WriteLine("\nHit <enter> to close shell\n");
+                //Console.ReadLine();
             }
             catch (Exception ex)
             {
@@ -53,15 +52,7 @@ namespace OtraPrueba2
                 mostrar_Decir_Mensaje("No se te entendio una goma, habla de nuevo");
             }            
 
-            if (txt.Equals("speech on"))
-            {
-                mostrar_Decir_Mensaje("Speech is now ON");
-            }
-            else if (txt.Equals("speech off"))
-            {
-                mostrar_Decir_Mensaje("Speech is now OFF");
-            }
-            else if (txt.Equals("click"))
+            if (txt.Equals("click"))
             {
                 MouseHook.ClickOnPoint(1, true);
             }
@@ -72,6 +63,10 @@ namespace OtraPrueba2
             else if (txt.Equals("click derecho"))
             {
                 MouseHook.ClickOnPoint(1, false);
+            } else if (txt.Equals("desconectar"))
+            {
+                mostrar_Decir_Mensaje("Gracias por utilizar aijansi");
+                Test.Desconectar();
             }
             else // No pasa nunca, podemos borrarla o dejarla porque esta bueno que putee en ingles (me esforce mucho xD)
             {

@@ -10,7 +10,7 @@ namespace OtraPrueba2 {
             var handle = GetConsoleWindow(); // Obtener la ventana
 
             //Activa el controlador del leap motion
-            //LeapController leapReader = new LeapController();
+            LeapController leapReader = new LeapController();
 
             //Activa keylogger
             KeyboardHook.Initialize();
@@ -25,6 +25,11 @@ namespace OtraPrueba2 {
 
             KeyboardHook.Dispose();
             MouseHook.Dispose();
+        }
+    
+        public static void Desconectar()
+        {
+            Application.Exit();
         }
 
         [DllImport("user32.dll")]

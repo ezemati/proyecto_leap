@@ -62,7 +62,11 @@ namespace OtraPrueba2
                 //Console.WriteLine(ObtenerElemento(mano).ToString());
 
                 Vector pos = mano.Fingers[1].StabilizedTipPosition;
-                MouseHook.SetCursorPos((int)pos.x * 7, (int)pos.y * (-3) + 500);
+                Console.WriteLine(pos.x + " " + pos.y);
+                MouseHook.SetCursorPos((int)pos.x * 4 + Screen.PrimaryScreen.Bounds.Width / 2, (int)pos.y * (-4) + Screen.PrimaryScreen.Bounds.Height * 3 / 2);
+                // El X = 0 es la mitad del ancho de la pantalla, para la izquierda es negativo, para la derecha es positivo
+
+                //Console.WriteLine(Screen.PrimaryScreen.Bounds.Height);
                 //this.Cursor = new Cursor(Cursor.Current.Handle);
                 //Cursor.Position = new Point((int)pos.x * 7, (int)pos.y * (-3) + 500);
                 //Cursor.Clip = new Rectangle(this.Location, this.Size);

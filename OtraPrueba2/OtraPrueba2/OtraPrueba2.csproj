@@ -127,6 +127,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /yr "C:\Users\ezequiel\Documents\GitHub\servicio_keylogger\LeapSDK\lib\x64\LeapC.dll" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /yr "C:\Users\43403629\Desktop\aaa\servicio_keylogger\LeapSDK\lib\x64\LeapC.dll" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
