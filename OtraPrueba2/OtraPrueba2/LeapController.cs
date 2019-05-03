@@ -77,5 +77,10 @@ namespace OtraPrueba2
             }
             controller.RequestImages(frame.Id, Leap.Image.ImageType.DEFAULT, imagedata);
         }
+
+        public bool leapEstaConectado()
+        {
+            return controller.IsConnected;
+        }
     }
 }
