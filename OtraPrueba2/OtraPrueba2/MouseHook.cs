@@ -148,5 +148,17 @@ namespace OtraPrueba2
                 mouse_event(mouse_RightUp, X, Y, 0, 0);
             }
         }
+
+        public static void HoldOnPoint(bool bHold)
+        {
+            uint X = (uint)Cursor.Position.X;
+            uint Y = (uint)Cursor.Position.Y;
+            if (bHold) { 
+                mouse_event(mouse_LeftDown, X, Y, 0, 0);
+            } else
+            {
+                mouse_event(mouse_LeftUp, X, Y, 0, 0);
+            }
+        }
     }
 }

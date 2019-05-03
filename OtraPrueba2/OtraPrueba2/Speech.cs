@@ -24,6 +24,8 @@ namespace OtraPrueba2
                 choices.Add("click");
                 choices.Add("doble click");
                 choices.Add("click derecho");
+                choices.Add("seleccionar");
+                choices.Add("desseleccionar");
                 choices.Add("desconectar");
                 sre.SpeechRecognized += sre_SpeechRecognized; //Cuando reconoce alguna de las opciones, va a la funcion
                 GrammarBuilder grammarBuilder = new GrammarBuilder();
@@ -50,7 +52,7 @@ namespace OtraPrueba2
             if (confidence < 0.60)
             {
                 mostrar_Decir_Mensaje("No se te entendio una goma, habla de nuevo");
-            }            
+            }
 
             if (txt.Equals("click"))
             {
@@ -63,7 +65,12 @@ namespace OtraPrueba2
             else if (txt.Equals("click derecho"))
             {
                 MouseHook.ClickOnPoint(1, false);
-            } else if (txt.Equals("desconectar"))
+            } else if (txt.Equals("seleccionar")) {
+                MouseHook.HoldOnPoint(true);
+            } else if (txt.Equals("desseleccionar")) {
+                MouseHook.HoldOnPoint(false);
+            }
+            else if (txt.Equals("desconectar"))
             {
                 mostrar_Decir_Mensaje("Gracias por utilizar aijansi");
                 Test.Desconectar();
