@@ -9,7 +9,9 @@ namespace OtraPrueba2
     public class Speech
     {
         static SpeechSynthesizer ss = new SpeechSynthesizer(); // Creo que esto no se usa nunca
-        static SpeechRecognitionEngine sre;
+        static SpeechRecognitionEngine sreComandos;
+        static SpeechRecognitionEngine sreTeclado;
+        static DictationGrammar dictation;
         static bool done = false; // Creo que esto no se usa nunca
         static bool speechOn = true;
         public static void Initialize()
@@ -18,8 +20,21 @@ namespace OtraPrueba2
             {
                 ss.SetOutputToDefaultAudioDevice(); // Creo que esto no se usa nunca
                 CultureInfo ci = new CultureInfo("es-ES"); // Para que el idioma de la entrada de voz sea espaniol
-                sre = new SpeechRecognitionEngine(ci);
-                sre.SetInputToDefaultAudioDevice();
+
+                //Comandos
+                sreComandos = new SpeechRecognitionEngine(ci);
+                sreComandos.SetInputToDefaultAudioDevice();
+
+                //Teclado <-- NO LO TERMINE YET
+                //sreTeclado = new SpeechRecognitionEngine(ci);
+                //sreTeclado.SetInputToDefaultAudioDevice();
+                //dictation = new DictationGrammar();
+                //dictation.Name = "default dictation";
+                //dictation.Enabled = true;
+                //sreTeclado.LoadGrammar(dictation);
+                //sreTeclado.SpeechRecognized += sreTeclado_SpeechRecognized;
+                //sreTeclado.RecognizeAsync(RecognizeMode.Multiple);
+
                 Choices choices = new Choices(); // Opciones para decir
                 choices.Add("click");
                 choices.Add("doble click");
@@ -28,24 +43,29 @@ namespace OtraPrueba2
                 choices.Add("desseleccionar");
                 choices.Add("desconectar");
                 choices.Add("silencio");
-                sre.SpeechRecognized += sre_SpeechRecognized; //Cuando reconoce alguna de las opciones, va a la funcion
+                choices.Add("silencio");
+
+                sreComandos.SpeechRecognized += sreComandos_SpeechRecognized; //Cuando reconoce alguna de las opciones, va a la funcion
                 GrammarBuilder grammarBuilder = new GrammarBuilder();
                 grammarBuilder.Append(choices);
                 Grammar grammar = new Grammar(grammarBuilder);
-                sre.LoadGrammar(grammar);
-                sre.RecognizeAsync(RecognizeMode.Multiple);
-                //Console.WriteLine("\nHit <enter> to close shell\n");
-                //Console.ReadLine();
+                sreComandos.LoadGrammar(grammar);
+                sreComandos.RecognizeAsync(RecognizeMode.Multiple);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("aaa");
                 Console.WriteLine(ex.Message);
                 Console.ReadLine();
             }
         } // Main
+
+        public static void sreTeclado_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            Console.WriteLine(e.Result.Text);
+        }
+
         static bool bSilencio = false;
-        static void sre_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        static void sreComandos_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             
             string txt = e.Result.Text;
@@ -73,6 +93,9 @@ namespace OtraPrueba2
                 MouseHook.HoldOnPoint(true);
             } else if (txt.Equals("desseleccionar")) {
                 MouseHook.HoldOnPoint(false);
+            } else if(txt.Equals("activar teclado"))
+            {
+                //Aca se va a activar y desactivar el teclado
             }
             else if (txt.Equals("desconectar"))
             {
@@ -98,7 +121,7 @@ namespace OtraPrueba2
                 mostrar_Decir_Mensaje(txt);
             }
             if (speechOn == false) return;
-        } // sre_SpeechRecognized
+        } // sreComandos_SpeechRecognized
 
         static void mostrar_Decir_Mensaje(String texto)
         {
