@@ -21,24 +21,21 @@ namespace OtraPrueba2 {
                 if (!leapReader.leapEstaConectado())
                 {
                     Console.WriteLine("No conectado");
-                    MessageBox.Show("El Leap no esta conectado! Se cerrara el programa", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El Leap no esta conectado!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else
-                {
-                    //Activa keylogger
-                    KeyboardHook.Initialize();
+                //Activa keylogger
+                KeyboardHook.Initialize();
 
-                    //Activa control de mouse
-                    MouseHook.Initialize(handle);
+                //Activa control de mouse
+                MouseHook.Initialize(handle);
 
-                    //Activa registro de voz
-                    Speech.Initialize();
+                //Activa registro de voz
+                Speech.Initialize();
 
-                    Application.Run();
+                Application.Run();
 
-                    KeyboardHook.Dispose();
-                    MouseHook.Dispose();
-                }
+                KeyboardHook.Dispose();
+                MouseHook.Dispose();
             } // Fin de verificar si esta instalado
             else
             {                

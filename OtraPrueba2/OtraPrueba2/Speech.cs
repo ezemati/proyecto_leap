@@ -43,7 +43,7 @@ namespace OtraPrueba2
                 choices.Add("desseleccionar");
                 choices.Add("desconectar");
                 choices.Add("silencio");
-                choices.Add("silencio");
+                choices.Add("activar teclado"); 
 
                 sreComandos.SpeechRecognized += sreComandos_SpeechRecognized; //Cuando reconoce alguna de las opciones, va a la funcion
                 GrammarBuilder grammarBuilder = new GrammarBuilder();
