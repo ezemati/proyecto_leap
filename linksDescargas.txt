@@ -2,3 +2,4 @@ Setup del Leap Motion: https://leapmotion.cachefly.net/Protected/expiretime=1558
 SDK del Leap Motion: https://leapmotion.cachefly.net/Protected/expiretime=1558177021/720f993a6772ce7b3d7d5ed047a35969/61a90a0/Leap_Motion_Developer_Kit_4.0.0+52173.zip
 Unity Core Assets: https://leapmotion.cachefly.net/Protected/expiretime=1558177696/bbf1f17e0e0c99f09ae9dc4236978df8/362d8ba/Leap_Motion_Core_Assets_%204.4.0.unitypackage
 Unity Hub Setup: https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.exe
+Leap Motion Interaction Engine: https://leapmotion.cachefly.net/Protected/expiretime=1558178834/f021e72f9811d68bb2dc127cb5f470e0/89112c8/Leap_Motion_Interaction_Engine_1.2.0.unitypackage
