@@ -5,6 +5,8 @@ SDK del Leap Motion: https://leapmotion.cachefly.net/Protected/expiretime=155817
 Unity Core Assets: https://leapmotion.cachefly.net/Protected/expiretime=1558177696/bbf1f17e0e0c99f09ae9dc4236978df8/362d8ba/Leap_Motion_Core_Assets_%204.4.0.unitypackage
 Unity Hub Setup: https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.exe
 Leap Motion Interaction Engine: https://leapmotion.cachefly.net/Protected/expiretime=1558178834/f021e72f9811d68bb2dc127cb5f470e0/89112c8/Leap_Motion_Interaction_Engine_1.2.0.unitypackage
+Leap Motion Interaction Engine v0.3.1: https://github-production-release-asset-2e65be.s3.amazonaws.com/52047290/cb9ee8ae-30d0-11e7-87f2-c5e2c0c91faa?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20190517%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190517T150526Z&X-Amz-Expires=300&X-Amz-Signature=7b69798b7b8bd05ab800b15bf5ef05bcec170b7fddc7a148c7b849217e6ad5fb&X-Amz-SignedHeaders=host&actor_id=26286219&response-content-disposition=attachment%3B%20filename%3DInteraction_Engine_0.3.1.unitypackage&response-content-type=application%2Foctet-stream
+Leap Motion Hands: https://leapmotion.cachefly.net/Protected/expiretime=1558187975/4f61fce3b687fa8fd2540d13b5f26b2a/60d67b7/Leap_Motion_Hands_Module_2.1.4.unitypackage
 
 Playlist de YouTube sobre Unity con Leap
 https://www.youtube.com/watch?v=Wh3YK2OcI4M&list=PLnTTrMDXCsLpjeAYUXdgcpuGBWZSp7vyS&index=2&t=0s
