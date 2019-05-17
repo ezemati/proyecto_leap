@@ -1,0 +1,2 @@
+Setup del Leap Motion: https://leapmotion.cachefly.net/Protected/expiretime=1558176735/b5d00f935e7a25ac6a2c9e40f0f05b08/c7ebf74/Leap_Motion_Setup_4.0.0.exe
+SDK del Leap Motion: https://leapmotion.cachefly.net/Protected/expiretime=1558177021/720f993a6772ce7b3d7d5ed047a35969/61a90a0/Leap_Motion_Developer_Kit_4.0.0+52173.zip
